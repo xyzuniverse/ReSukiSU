@@ -541,7 +541,7 @@ private fun generateTypography(): androidx.compose.material3.Typography {
             blurRadius = 0f
         )
         return shadow.copy(
-            color = if (darkMode) Color.White.copy(alpha = 0.7f) else Color.Black.copy(alpha = 0.7f)
+            color = if (darkMode) Color.Black.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.7f)
         )
     }
 
