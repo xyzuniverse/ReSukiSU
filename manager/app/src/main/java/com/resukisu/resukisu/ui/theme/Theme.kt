@@ -443,6 +443,8 @@ var backgroundSeedColor by mutableIntStateOf(0)
  */
 @Composable
 fun Modifier.blurSource(): Modifier {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return this
+
     return LocalBlurState.current?.let {
         this.then(Modifier.layerBackdrop(it))
     } ?: this
@@ -454,6 +456,8 @@ fun Modifier.blurSource(): Modifier {
  */
 @Composable
 fun Modifier.blurEffect(): Modifier {
+    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return this
+
     return LocalBlurState.current?.let { backdrop ->
         val blendColor =
             MaterialTheme.colorScheme.surfaceContainer.copy(alpha = 0.8f)

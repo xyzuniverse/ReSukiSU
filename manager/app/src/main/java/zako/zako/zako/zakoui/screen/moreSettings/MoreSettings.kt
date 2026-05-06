@@ -921,32 +921,33 @@ private fun BackgroundAdjustmentControls(
             AlphaSlider(state = state, handlers = handlers, coroutineScope = coroutineScope)
             DimSlider(state = state, handlers = handlers, coroutineScope = coroutineScope)
         }
-        SettingsSwitchWidget(
-            icon = Icons.Filled.BlurOn,
-            title = stringResource(id = R.string.settings_config_enable_blur),
-            description = stringResource(id = R.string.settings_config_enable_blur_summary),
-            checked = ThemeConfig.isEnableBlur,
-            onCheckedChange = { isChecked ->
-                BackgroundManager.saveEnableBlur(context, isChecked)
-            }
-        )
-        AnimatedVisibility(
-            visible = ThemeConfig.isEnableBlur,
-            enter = fadeIn() + slideInVertically(),
-            exit = fadeOut() + slideOutVertically()
-        ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             SettingsSwitchWidget(
-                icon = Icons.Filled.Draw,
-                title = stringResource(id = R.string.settings_exp_draw_background_to_blur),
-                description = stringResource(id = R.string.settings_exp_draw_background_to_blur_description),
-                isError = true,
-                checked = ThemeConfig.isEnableBlurExp,
+                icon = Icons.Filled.BlurOn,
+                title = stringResource(id = R.string.settings_config_enable_blur),
+                description = stringResource(id = R.string.settings_config_enable_blur_summary),
+                checked = ThemeConfig.isEnableBlur,
                 onCheckedChange = { isChecked ->
-                    BackgroundManager.saveEnableBlurExp(context, isChecked)
+                    BackgroundManager.saveEnableBlur(context, isChecked)
                 }
             )
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AnimatedVisibility(
+                visible = ThemeConfig.isEnableBlur,
+                enter = fadeIn() + slideInVertically(),
+                exit = fadeOut() + slideOutVertically()
+            ) {
+                SettingsSwitchWidget(
+                    icon = Icons.Filled.Draw,
+                    title = stringResource(id = R.string.settings_exp_draw_background_to_blur),
+                    description = stringResource(id = R.string.settings_exp_draw_background_to_blur_description),
+                    isError = true,
+                    checked = ThemeConfig.isEnableBlurExp,
+                    onCheckedChange = { isChecked ->
+                        BackgroundManager.saveEnableBlurExp(context, isChecked)
+                    }
+                )
+            }
+
             AnimatedVisibility(
                 visible = state.useDynamicColor,
                 enter = fadeIn() + slideInVertically(),
